@@ -19,6 +19,8 @@ app.get("/", async (req, res) => {
 
 app.post("/create", async (req, res) => {
   try {
+    console.log(req.body);
+    console.log(bookValidator.isValidISBN(req.body.ISBN));
     if (bookValidator.isValidISBN(req.body.ISBN)) {
       const book = new Book(req.body);
       const savedBook = await book.save();
