@@ -25,5 +25,26 @@ app.post('/login', async (req, res) => {
   }
 });
 
+app.post('/register', async (req, res) => {
+  try {
+    const { username, password } = req.body;
+
+    // Check if the user already exists
+    const existingUser = await User.findOne({ username }).exec();
+    if (existingUser) {
+      return res.status(400).json({ message: 'Username already exists' });
+    }
+
+    // Create a new user
+    const newUser = new User({ username, password });
+    await newUser.save();
+
+    res.status(201).json({ message: 'Registration successful' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
 module.exports = app;
 
