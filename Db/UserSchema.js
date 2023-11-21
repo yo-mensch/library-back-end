@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 mongoose.connect('mongodb://localhost:27017/Library', { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => console.log('MongoDB connected'))
+  .then(() => console.log('MongoDB connected 2'))
   .catch(err => console.log(err));
 
 const userSchema = new mongoose.Schema({
