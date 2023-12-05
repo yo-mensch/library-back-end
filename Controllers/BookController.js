@@ -1,7 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const { Book } = require("../Db/BookSchema");
-const { LentBook } = require("../Db/LentBookSchema");
+const { Lending } = require("../Db/LendingSchema");
 const bookValidator = require("../Validators/BookValidator");
 
 const app = express();
@@ -20,7 +20,7 @@ app.get("/", async (req, res) => {
 
 app.get("/lent", async (req, res) => {
   try {
-    const lentBooks = await LentBook.find({});
+    const lentBooks = await Lending.find({});
     res.json(lentBooks);
   } catch (err) {
     console.log(err);
@@ -75,26 +75,17 @@ app.delete("/:_id", async (req, res) => {
     }
   });
 
-  app.put("/lend/:_id", async (req, res) => {
+  app.post("/lend/:_id", async (req, res) => {
     try {
       // Check if the book with the given ID exists
       const existingBook = await Book.findById(req.params._id);
       if (!existingBook) {
         return res.status(404).send("Book not found");
       }
-  
-      // Validate the request body or perform any necessary checks
-      // For simplicity, assuming the request body contains clientInfo and status
-      const { clientInfo, status } = req.body;
-  
-      // Update the book's status to "lent"
-      const updatedBook = await Book.findByIdAndUpdate(
-        req.params._id,
-        { status, clientInfo },
-        { new: true }
-      );
-  
-      res.json(updatedBook);
+      console.log(req.body);
+      const lending = new Lending(req.body); 
+      const savedLending = await lending.save();
+      res.json(savedLending);
     } catch (err) {
       console.error(err);
       res.status(500).send("Internal Server Error");
