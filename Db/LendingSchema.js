@@ -5,14 +5,13 @@ mongoose.connect('mongodb://localhost:27017/Library', { useNewUrlParser: true, u
   .catch(err => console.log(err));
 
   const lendingSchema = new mongoose.Schema({
-    name: String,
-    author: String,
-    ISBN: String,
+    book_id: String,
     status: String,
     clientName: String,
     clientSurname: String,
     clientPhoneNumber: String,
-    deadline: String
+    deadline: String,
+    dateWhenReturned: String
   });
 
 const Lending = mongoose.model('Lending', lendingSchema);
