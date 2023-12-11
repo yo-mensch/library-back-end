@@ -92,4 +92,19 @@ app.delete("/:_id", async (req, res) => {
     }
   });
 
+  app.put("/lend/:_id", async (req, res) => {
+    try {
+      const updatedLending = await Lending.findByIdAndUpdate(
+        req.params._id,
+        req.body,
+        { new: true }
+      );
+      res.json(updatedLending);
+      console.log(req.body);
+    } catch (err) {
+      console.error(err);
+      res.status(500).send("Internal Server Error");
+    }
+  });
+
 module.exports = app;

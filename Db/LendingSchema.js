@@ -6,7 +6,7 @@ mongoose.connect('mongodb://localhost:27017/Library', { useNewUrlParser: true, u
 
   const lendingSchema = new mongoose.Schema({
     book_id: String,
-    status: String,
+    lendingStatus: String,
     clientName: String,
     clientSurname: String,
     clientPhoneNumber: String,
