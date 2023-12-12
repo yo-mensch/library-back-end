@@ -107,4 +107,19 @@ app.delete("/:_id", async (req, res) => {
     }
   });
 
+  app.get('/late', async (req, res) => {
+    try {
+      const today = new Date();
+      const lateLendings = await Lending.find({
+        deadline: { $lt: today },
+        dateWhenReturned: { $in: [null, ""] }
+      }).populate('book_id'); // This populates the book_id field with data from the Book model
+  
+      res.json(lateLendings);
+    } catch (err) {
+      console.error(err);
+      res.status(500).send('Internal Server Error');
+    }
+  });
+
 module.exports = app;

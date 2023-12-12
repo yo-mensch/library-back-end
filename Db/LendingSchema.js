@@ -5,12 +5,16 @@ mongoose.connect('mongodb://localhost:27017/Library', { useNewUrlParser: true, u
   .catch(err => console.log(err));
 
   const lendingSchema = new mongoose.Schema({
-    book_id: String,
+    book_id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Book', // Reference to the Book model
+      required: true
+    },
     lendingStatus: String,
     clientName: String,
     clientSurname: String,
     clientPhoneNumber: String,
-    deadline: String,
+    deadline: { type: Date, required: true },
     dateWhenReturned: String
   });
 
